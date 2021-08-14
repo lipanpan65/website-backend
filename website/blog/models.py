@@ -2,7 +2,8 @@ from django.db import models
 
 
 # Create your models here.
-
+# 字段属性
+# https://www.cnblogs.com/lanyinhao/p/9463322.html
 class Article(models.Model):
     """
     文章表
@@ -48,7 +49,7 @@ class Article(models.Model):
     publish_time = models.DateTimeField(auto_now=True, help_text='发表时间')  # 每次修改对象都会保存当前时间 auto_now = True
     create_time = models.DateTimeField(auto_now_add=True, help_text='草稿创建时间')  # 对象被创建的时候 的 时间
     # user = models.ForeignKey(to='UserInfo', to_field='id', verbose_name='关联作者', on_delete=models.CASCADE)
-    article_detail = models.OneToOneField(to='ArticleDetail', to_field='id', null=True, help_text="内容详情",
+    article_detail = models.OneToOneField(to='ArticleDetail', to_field='id', help_text="内容详情",
                                           on_delete=models.CASCADE, db_column='article_detail')
 
     class Meta:
