@@ -31,5 +31,5 @@ class UserInfo(models.Model):
     USERNAME_FIELD = username.verbose_name
     _bsp_user = None
 
-    class Meta:
-        db_table = 'dbms_userinfo'
+    # class Meta:
+    #     db_table = 'dbms_userinfo'

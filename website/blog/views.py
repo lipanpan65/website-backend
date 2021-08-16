@@ -67,6 +67,13 @@ class ArticleViewSet(ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        article_detail = instance.article_detail
+        article_detail.delete()
+        instance.delete()
+        return Response({"success": True})
+
 
 """
   992  echo 1 > /proc/sys/vm/drop_caches
