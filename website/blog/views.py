@@ -51,3 +51,32 @@ class ArticleViewSet(ModelViewSet):
         instance.update(status='publish')
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+    # detail为True，表示路径名格式应该为 book/{pk}/read/
+    # detail为False 表示路径名格式应该为 book/latest/
+    @action(methods=['GET'], detail=False, )
+    def draft(self, request, *args, **kwargs):
+        """
+        默认创建文章 post 创建文章
+        """
+        queryset = self.filter_queryset(self.get_queryset().filter(status='draft'))
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        article_detail = instance.article_detail
+        article_detail.delete()
+        instance.delete()
+        return Response({"success": True})
+
+
+"""
+  992  echo 1 > /proc/sys/vm/drop_caches
+  993  echo 2 > /proc/sys/vm/drop_caches
+  994  echo 3 > /proc/sys/vm/drop_caches
+"""
