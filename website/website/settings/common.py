@@ -16,7 +16,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -121,3 +121,58 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# ROOT_DIR = os.path.dirname(BASE_DIR)
+log_dft_dir = '/opt/log/django/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'show_time': {
+            'format': '%(asctime)s %(levelname)s [%(pathname)s %(funcName)s() line:%(lineno)s] [MSG][%(threadName)s]%(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'formatter': 'show_time',
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'formatter': 'show_time',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(log_dft_dir, 'logging.log'),
+            'encoding': 'UTF8',
+        },
+        'dba_base_h': {
+            'level': 'DEBUG',
+            'formatter': 'show_time',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(log_dft_dir, 'dba_base.log'),
+            'encoding': 'UTF8',
+        },
+        'dba_api_h': {
+            'level': 'DEBUG',
+            'formatter': 'show_time',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(log_dft_dir, 'dba_api.log'),
+            'encoding': 'UTF8',
+        },
+    },
+    'loggers': {
+        'dba_base': {
+            'handlers': ['dba_base_h'],
+            'propagate': False,
+            'level': 'INFO',
+        },
+        'dba_api': {
+            'handlers': ['dba_api_h'],
+            'propagate': False,
+            'level': 'INFO',
+        },
+    }
+}
