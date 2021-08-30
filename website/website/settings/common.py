@@ -36,7 +36,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'blog',
+    'userinfo'
 ]
 
 MIDDLEWARE = [
@@ -122,7 +123,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 # ROOT_DIR = os.path.dirname(BASE_DIR)
 log_dft_dir = '/opt/log/django/'
 
@@ -176,3 +176,6 @@ LOGGING = {
         },
     }
 }
+
+#########
+AUTH_USER_MODEL = 'userinfo.UserInfo'

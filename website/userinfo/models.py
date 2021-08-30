@@ -1,9 +1,12 @@
 from django.db import models
 
-
 # Create your models here.
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser
 
 
+# https://www.cnblogs.com/thinkingtouch/articles/13758109.html
+
+# class UserInfo(AbstractBaseUser):
 class UserInfo(models.Model):
     STATUS_DISABLE = 0
     STATUS_ENABLE = 1
@@ -24,12 +27,28 @@ class UserInfo(models.Model):
     name = models.CharField('name', max_length=50, null=True, default=None, help_text='姓名')
     email = models.CharField('email', max_length=50, null=True, default=None, help_text='邮箱')
     phone = models.CharField('phone', max_length=50, null=True, default=None, help_text='联系电话')
-
     last_login = None
     backend = 'django.contrib.auth.backends.ModelBackend'
-    REQUIRED_FIELDS = []
-    USERNAME_FIELD = username.verbose_name
-    _bsp_user = None
 
-    # class Meta:
-    #     db_table = 'dbms_userinfo'
+    # EMAIL_FIELD = 'email'
+    USERNAME_FIELD = username.verbose_name
+    REQUIRED_FIELDS = []
+
+    class Meta:
+        db_table = 'tb_userinfo'
+
+    @property
+    def is_anonymous(self):
+        """
+        Always return False. This is a way of comparing User objects to
+        anonymous users.
+        """
+        return False
+
+    @property
+    def is_authenticated(self):
+        """
+        Always return True. This is a way to tell if the user has been
+        authenticated in templates.
+        """
+        return True
